@@ -1,0 +1,36 @@
+{
+  // Use IntelliSense to learn about possible attributes.
+  // Hover to view descriptions of existing attributes.
+  // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "pwa-node",
+      "request": "launch",
+      "name": "Launch Ebay",
+      "skipFiles": [
+        "<node_internals>/**"
+      ],
+      "program": "${workspaceFolder}/src/ebay/local.ts",
+      "outFiles": [
+        "${workspaceFolder}/**/*.js"
+      ],
+      "preLaunchTask": "npm: build",
+      "runtimeExecutable": "/home/mathis/.nvm/versions/node/v17.2.0/bin/node"
+    },
+    {
+      "type": "pwa-node",
+      "request": "launch",
+      "name": "Launch Discord",
+      "skipFiles": [
+        "<node_internals>/**"
+      ],
+      "program": "${workspaceFolder}/src/ebay/discord.ts",
+      "outFiles": [
+        "${workspaceFolder}/**/*.js"
+      ],
+      "preLaunchTask": "npm: build",
+      "runtimeExecutable": "/home/mathis/.nvm/versions/node/v17.2.0/bin/node"
+    }
+  ]
+}
