@@ -5,6 +5,7 @@ interface Flat {
   zimmerAnzahl: string
   warmMiete: string
   kaltMiete: string
+  nebenkosten: string
   verfuegbarAb: string
   wohnungsTyp?: string
   groeße: string

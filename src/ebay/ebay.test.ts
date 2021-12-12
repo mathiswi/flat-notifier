@@ -15,6 +15,7 @@ test('Scrapes site and returns flat', async () => {
     wohnungsTyp: 'Penthouse',
     verfuegbarAb: 'März 2022',
     kaltMiete: '550 €',
+    nebenkosten: '',
     warmMiete: '700 €',
     adresse: '26122 Niedersachsen - Oldenburg',
     features: ['Balkon', 'Terrasse', 'Einbauküche', 'Aufzug', 'Keller'],
@@ -32,6 +33,7 @@ test('Format flat details to discord message', () => {
     verfuegbarAb: 'März 2022',
     kaltMiete: '550 €',
     warmMiete: '700 €',
+    nebenkosten: '',
     adresse: '26122 Niedersachsen - Oldenburg',
     features: ['Balkon', 'Terrasse', 'Einbauküche', 'Aufzug', 'Keller'],
     firstImageUrl: 'https://i.ebayimg.com/00/s/OTAwWDE2MDA=/z/QsEAAOSwlHlhsMdy/$_59.JPG',
@@ -41,6 +43,7 @@ https://ebay-kleinanzeigen.de/s-anzeige/1-zimmer-penthousewohnung-mit-blick-uebe
 1 ZIMMER PENTHOUSEWOHNUNG MIT BLICK ÜBER DIE STADT
 **Kalt**: 550 €
 **Warm**: 700 €
+**Nebenkosten**: 
 **Größe**: 55 m²
 **Adresse**: 26122 Niedersachsen - Oldenburg
 **Zimmer**: 1

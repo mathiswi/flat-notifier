@@ -19,6 +19,7 @@ ${input.url}
 ${input.titel}
 **Kalt**: ${input.kaltMiete}
 **Warm**: ${input.warmMiete}
+**Nebenkosten**: ${input.nebenkosten}
 **Größe**: ${input.groeße}
 **Adresse**: ${input.adresse}
 **Zimmer**: ${input.zimmerAnzahl}

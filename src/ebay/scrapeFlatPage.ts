@@ -26,6 +26,7 @@ export async function scrapeFlatPage(href: string): Promise<Flat> {
     verfuegbarAb: '',
     kaltMiete: '',
     warmMiete: '',
+    nebenkosten: '',
     adresse: '',
   };
 
@@ -52,6 +53,9 @@ export async function scrapeFlatPage(href: string): Promise<Flat> {
         break;
       case 'Warmmiete':
         flat.warmMiete = value;
+        break;
+      case 'Nebenkosten':
+        flat.nebenkosten = value;
         break;
       default:
         break;
