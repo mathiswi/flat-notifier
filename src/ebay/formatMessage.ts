@@ -24,7 +24,7 @@ ${input.titel}
 **Adresse**: ${input.adresse}
 **Zimmer**: ${input.zimmerAnzahl}
 **Typ**: ${input.wohnungsTyp}
-**Verfügbar:**: ${input.verfuegbarAb}
+**Verfügbar:** ${input.verfuegbarAb}
   `;
   return detailBlock;
 }

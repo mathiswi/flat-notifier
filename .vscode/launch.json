@@ -16,7 +16,10 @@
         "${workspaceFolder}/**/*.js"
       ],
       "preLaunchTask": "npm: build",
-      "runtimeExecutable": "/home/mathis/.nvm/versions/node/v17.2.0/bin/node"
+      "runtimeExecutable": "/home/mathis/.nvm/versions/node/v17.2.0/bin/node",
+      "env": {
+        "STAGE": "offline"
+      }
     },
     {
       "type": "pwa-node",
