@@ -1,7 +1,8 @@
 /* eslint-disable max-len */
 /* eslint-disable no-restricted-syntax */
-import axios from 'axios';
 import { readFileSync } from 'fs';
+import chromium from 'chrome-aws-lambda';
+import playwright from 'playwright-core';
 import { sendDiscordMessage } from './sendDiscordMessage';
 import { formatMessage } from './formatMessage';
 import { scrapeSite } from './scrapeSite';
@@ -15,11 +16,16 @@ export const handler = async (): Promise<void> => {
       site = readFileSync(path.resolve(__dirname, 'mock.html'), { encoding: 'utf-8' });
     } else {
       const url = 'https://www.ebay-kleinanzeigen.de/s-wohnung-mieten/oldenburg/anzeige:angebote/preis::780/wohnung/k0c203l3108r10+wohnung_mieten.qm_d:40.00,76';
-
-      const { data } = await axios.get(url, {
-        headers: { 'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:47.0) Gecko/20100101 Firefox/47.0' },
+      const browser = await playwright.chromium.launch({
+        args: chromium.args,
+        executablePath: await chromium.executablePath,
+        headless: chromium.headless,
       });
-      site = data;
+      const context = await browser.newContext();
+      const page = await context.newPage();
+      await page.goto(url);
+      site = await page.content();
+      await browser.close();
     }
     const flats = await scrapeSite(site);
     const promises = [];
