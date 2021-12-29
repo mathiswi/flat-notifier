@@ -1,6 +1,6 @@
 # flat-notifier
 
-Small project to crawl flat-ads from ebay-Kleinanzeigen every 10 minutes and notifies me via discord message if it found a new flat.
+Small project which crawls flat-ads from ebay-Kleinanzeigen every 10 minutes and notifies me via discord message if a new flat was found.
 
 ## Deploy
 
