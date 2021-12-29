@@ -1,11 +1,10 @@
 /* eslint-disable no-await-in-loop */
 /* eslint-disable no-restricted-syntax */
-import { JSDOM } from 'jsdom';
+import { DOMWindow } from 'jsdom';
 import { isLessThanTenMinutesAgo } from './isLessThanTenMinutesAgo';
 import { scrapeFlatPage } from './scrapeFlatPage';
 
-export async function scrapeSite(data: any): Promise<Flat[]> {
-  const { window } = new JSDOM(data);
+export async function scrapeSite(window: DOMWindow): Promise<Flat[]> {
   const flatItems = [...window.document.querySelectorAll('.aditem-main')];
   const flats: Flat[] = [];
   for (const flatEntry of flatItems) {

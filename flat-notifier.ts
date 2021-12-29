@@ -10,21 +10,20 @@ export class FlatNotifierStack extends cdk.Stack {
   constructor(scope: cdk.Construct, id: string, props?: cdk.StackProps) {
     super(scope, id, props);
 
-    const axiosLayer = lambda.LayerVersion.fromLayerVersionArn(this, 'axios-lambda-layer', 'arn:aws:lambda:eu-central-1:161489297905:layer:axios-lambda-layer:3');
     const discordLayer = lambda.LayerVersion.fromLayerVersionArn(this, 'discordjs-lambda-layer', 'arn:aws:lambda:eu-central-1:161489297905:layer:discordjs-lambda-layer:3');
     const jsdomLayer = lambda.LayerVersion.fromLayerVersionArn(this, 'jsdom-lambda-layer', 'arn:aws:lambda:eu-central-1:161489297905:layer:jsdom-lambda-layer:5');
-    const playwrightLayer = lambda.LayerVersion.fromLayerVersionArn(this, 'playwright-lambda-layer', 'arn:aws:lambda:eu-central-1:161489297905:layer:playwright-lambda-layer:2');
+
     const ebayLambda = new lambda.Function(this, 'ebay', {
       code: lambda.Code.fromAsset('dist/src/ebay/', { exclude: ['*.ts', 'local.js', '*.html', ''] }),
       handler: 'ebay.handler',
       runtime: lambda.Runtime.NODEJS_14_X,
       timeout: Duration.seconds(20),
-      memorySize: 2048,
-      layers: [axiosLayer, discordLayer, jsdomLayer, playwrightLayer],
+      memorySize: 256,
+      layers: [discordLayer, jsdomLayer],
     });
 
     const schedule = new events.Rule(this, 'ebay-scraper', {
-      schedule: events.Schedule.expression('rate(10 minutes)'),
+      schedule: events.Schedule.expression('rate(5 minutes)'),
     });
     schedule.addTarget(new targets.LambdaFunction(ebayLambda));
   }

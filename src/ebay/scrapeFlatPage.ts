@@ -1,5 +1,4 @@
 import { JSDOM } from 'jsdom';
-import axios from 'axios';
 import { trimString } from './trimString';
 
 // import { readFileSync } from 'fs';
@@ -10,12 +9,6 @@ import { trimString } from './trimString';
 
 export async function scrapeFlatPage(href: string): Promise<Flat> {
   const url = `https://ebay-kleinanzeigen.de${href}`;
-  const { data } = await axios.get(
-    url,
-    {
-      headers: { 'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:47.0) Gecko/20100101 Firefox/47.0' },
-    },
-  );
 
   const flat: Flat = {
     url,
@@ -30,7 +23,7 @@ export async function scrapeFlatPage(href: string): Promise<Flat> {
     adresse: '',
   };
 
-  const { window } = new JSDOM(data);
+  const { window } = await JSDOM.fromURL(url);
   flat.titel = trimString(window.document.querySelector('#viewad-title')?.textContent as string);
   flat.adresse = trimString(window.document.querySelector('#viewad-locality')?.textContent as string);
   flat.kaltMiete = trimString(window.document.querySelector('#viewad-price')?.textContent as string);
