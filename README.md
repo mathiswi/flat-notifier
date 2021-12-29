@@ -1,14 +1,30 @@
-# Welcome to your CDK TypeScript project!
+# flat-notifier
 
-This is a blank project for TypeScript development with CDK.
+Small project to crawl flat-ads from ebay-Kleinanzeigen every 10 minutes and notifies me via discord message if it found a new flat.
 
-The `cdk.json` file tells the CDK Toolkit how to execute your app.
+## Deploy
 
-## Useful commands
+Configured aws-cli and aws-cdk is required to deploy to aws. 
 
- * `npm run build`   compile typescript to js
- * `npm run watch`   watch for changes and compile
- * `npm run test`    perform the jest unit tests
- * `cdk deploy`      deploy this stack to your default AWS account/region
- * `cdk diff`        compare deployed stack with current state
- * `cdk synth`       emits the synthesized CloudFormation template
+```bash
+# Install dependencies
+npm install
+
+# Run locally
+npm run dev
+
+# Deploy
+npm run deploy
+```
+
+To keep the deployment package small I use discord and JSDOM as a lambda layer. Check [https://github.com/mathiswi/nodejs-aws-lambda-layers](https://github.com/mathiswi/nodejs-aws-lambda-layers) for details.
+
+The discord-bot requires config.json in `src/ebay/` which looks like
+
+```json
+{
+  "token": BOT_TOKEN,
+  "userId": USER_ID
+}
+```
+
