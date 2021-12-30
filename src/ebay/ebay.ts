@@ -2,7 +2,7 @@
 import { readFileSync } from 'fs';
 import { DOMWindow, JSDOM } from 'jsdom';
 import { sendDiscordMessage } from './sendDiscordMessage';
-import { formatMessage } from './formatMessage';
+import { formatErrorMessage, formatMessage } from './formatMessage';
 import { scrapeSite } from './scrapeSite';
 
 const path = require('path');
@@ -21,7 +21,6 @@ export const handler = async (): Promise<void> => {
     }
     const flats = await scrapeSite(domWindow);
     const promises = [];
-    console.log(flats);
     if (flats?.length > 0) {
       console.log('Wohnung gefunden');
       for (const flat of flats) {
@@ -33,5 +32,6 @@ export const handler = async (): Promise<void> => {
     await Promise.all(promises);
   } catch (err: any) {
     console.error(err);
+    await sendDiscordMessage(formatErrorMessage(err));
   }
 };

@@ -8,10 +8,8 @@ import { trimString } from './trimString';
 // export const detailedMock = readFileSync(path.resolve(__dirname, 'detailedMock.html'), { encoding: 'utf-8' });
 
 export async function scrapeFlatPage(href: string): Promise<Flat> {
-  const url = `https://ebay-kleinanzeigen.de${href}`;
-
   const flat: Flat = {
-    url,
+    url: href,
     titel: '',
     groeße: '',
     zimmerAnzahl: '',
@@ -23,7 +21,7 @@ export async function scrapeFlatPage(href: string): Promise<Flat> {
     adresse: '',
   };
 
-  const { window } = await JSDOM.fromURL(url);
+  const { window } = await JSDOM.fromURL(`test${href}`);
   flat.titel = trimString(window.document.querySelector('#viewad-title')?.textContent as string);
   flat.adresse = trimString(window.document.querySelector('#viewad-locality')?.textContent as string);
   flat.kaltMiete = trimString(window.document.querySelector('#viewad-price')?.textContent as string);
