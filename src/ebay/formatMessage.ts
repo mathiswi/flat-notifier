@@ -28,3 +28,9 @@ ${input.titel}
   `;
   return detailBlock;
 }
+
+export function formatErrorMessage(input: any) {
+  const text = JSON.stringify(input, Object.getOwnPropertyNames(input), 4);
+
+  return `\`\`\`\njson${text}\`\`\``;
+}

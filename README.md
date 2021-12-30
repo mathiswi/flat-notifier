@@ -19,7 +19,7 @@ npm run deploy
 
 To keep the deployment package small I use discord and JSDOM as a lambda layer. Check [https://github.com/mathiswi/nodejs-aws-lambda-layers](https://github.com/mathiswi/nodejs-aws-lambda-layers) for details.
 
-The discord-bot requires config.json in `src/ebay/` which looks like
+The discord-bot requires config.json in `src/ebay/`:
 
 ```json
 {
