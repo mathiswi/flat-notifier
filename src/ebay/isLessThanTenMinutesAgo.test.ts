@@ -1,6 +1,6 @@
 import { isLessThanTenMinutesAgo } from './isLessThanTenMinutesAgo';
 
-test('HTML String is less than 5 minutes ago', () => {
+test('HTML String is less than 10 minutes ago', () => {
   const dateToday = new Date();
   dateToday.setHours(15);
   dateToday.setMinutes(13);
@@ -10,7 +10,7 @@ test('HTML String is less than 5 minutes ago', () => {
   expect(isLessThanTenMinutesAgo(htmlInput)).toBe(true);
 });
 
-test('HTML String is older than 5 minutes ago', () => {
+test('HTML String is older than 10 minutes ago', () => {
   const dateToday = new Date();
   dateToday.setHours(15);
   dateToday.setMinutes(13);

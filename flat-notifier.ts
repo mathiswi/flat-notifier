@@ -23,7 +23,7 @@ export class FlatNotifierStack extends cdk.Stack {
     });
 
     const schedule = new events.Rule(this, 'ebay-scraper', {
-      schedule: events.Schedule.expression('rate(5 minutes)'),
+      schedule: events.Schedule.expression('rate(10 minutes)'),
     });
     schedule.addTarget(new targets.LambdaFunction(ebayLambda));
   }
