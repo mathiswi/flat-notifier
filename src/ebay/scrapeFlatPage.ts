@@ -21,7 +21,7 @@ export async function scrapeFlatPage(href: string): Promise<Flat> {
     adresse: '',
   };
 
-  const { window } = await JSDOM.fromURL(`test${href}`);
+  const { window } = await JSDOM.fromURL(href);
   flat.titel = trimString(window.document.querySelector('#viewad-title')?.textContent as string);
   flat.adresse = trimString(window.document.querySelector('#viewad-locality')?.textContent as string);
   flat.kaltMiete = trimString(window.document.querySelector('#viewad-price')?.textContent as string);

@@ -5,7 +5,8 @@
     "flat-notifier": "bin/flat-notifier.js"
   },
   "scripts": {
-    "dev": "STAGE=offline ts-node --files src/ebay/local.ts",
+    "dev": "ts-node --files src/ebay/local.ts",
+    "dev:offline": "STAGE=offline ts-node --files src/ebay/local.ts",
     "dev:discord": "ts-node --files src/ebay/discord.ts",
     "build": "rm -rf dist && tsc && cp src/ebay/*ock.html dist/src/ebay/",
     "compile": "loadnvm && tsc",

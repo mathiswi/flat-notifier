@@ -10,13 +10,16 @@ const path = require('path');
 export const handler = async (): Promise<void> => {
   try {
     let domWindow: DOMWindow;
-    if (process.env.STAGE === 'offline1') {
+    if (process.env.STAGE === 'offline') {
       const file = readFileSync(path.resolve(__dirname, 'mock.html'), { encoding: 'utf-8' });
       const { window } = new JSDOM(file);
       domWindow = window;
     } else {
       const url = 'https://www.ebay-kleinanzeigen.de/s-wohnung-mieten/oldenburg/anzeige:angebote/preis::780/wohnung/k0c203l3108r10+wohnung_mieten.qm_d:40.00,76';
-      const { window } = await JSDOM.fromURL(url);
+
+      const { window } = await JSDOM.fromURL(url, {
+        pretendToBeVisual: true,
+      });
       domWindow = window;
     }
     const flats = await scrapeSite(domWindow);
@@ -33,5 +36,6 @@ export const handler = async (): Promise<void> => {
   } catch (err: any) {
     console.error(err);
     await sendDiscordMessage(formatErrorMessage(err));
+    await handler();
   }
 };

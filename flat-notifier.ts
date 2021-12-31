@@ -21,11 +21,22 @@ export class FlatNotifierStack extends cdk.Stack {
       memorySize: 256,
       layers: [discordLayer, jsdomLayer],
     });
-
-    const schedule = new events.Rule(this, 'ebay-scraper', {
+    const schedule = new events.Rule(this, 'ebay_scraper}', {
       schedule: events.Schedule.expression('rate(10 minutes)'),
     });
     schedule.addTarget(new targets.LambdaFunction(ebayLambda));
+    // for (let i = 0; i < 6; i += 1) {
+    //   const ebayLambda = new lambda.Function(this, `ebay_number_${i}`, {
+    //     code: lambda.Code.fromAsset('dist/src/ebay/'
+    // , { exclude: ['*.ts', 'local.js', '*.html', ''] }),
+    //     handler: 'ebay.handler',
+    //     runtime: lambda.Runtime.NODEJS_14_X,
+    //     timeout: Duration.seconds(20),
+    //     memorySize: 256,
+    //     layers: [discordLayer, jsdomLayer],
+    //   });
+
+    // }
   }
 }
 
