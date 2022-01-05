@@ -1,13 +1,16 @@
 /* eslint-disable no-restricted-syntax */
 import { readFileSync } from 'fs';
 import { DOMWindow, JSDOM } from 'jsdom';
+import * as AWS from 'aws-sdk';
 import { sendDiscordMessage } from './sendDiscordMessage';
 import { formatErrorMessage, formatMessage } from './formatMessage';
 import { scrapeSite } from './scrapeSite';
 
 const path = require('path');
 
-export const handler = async (): Promise<void> => {
+const lambda = new AWS.Lambda();
+
+export const handler = async (event?: any, context?: any): Promise<void> => {
   try {
     let domWindow: DOMWindow;
     if (process.env.STAGE === 'offline') {
@@ -16,7 +19,6 @@ export const handler = async (): Promise<void> => {
       domWindow = window;
     } else {
       const url = 'https://www.ebay-kleinanzeigen.de/s-wohnung-mieten/oldenburg/anzeige:angebote/preis::780/wohnung/k0c203l3108r10+wohnung_mieten.qm_d:40.00,76';
-
       const { window } = await JSDOM.fromURL(url, {
         pretendToBeVisual: true,
       });
@@ -33,9 +35,30 @@ export const handler = async (): Promise<void> => {
       console.log('Keine neue Wohnung verfügbar');
     }
     await Promise.all(promises);
+    if (context?.functionName) {
+      await lambda.updateFunctionConfiguration({
+        FunctionName: context?.functionName,
+        Environment: {
+          Variables: {
+            FAILED_RUNS: '0',
+          },
+        },
+      }).promise();
+    }
   } catch (err: any) {
     console.error(err);
     await sendDiscordMessage(formatErrorMessage(err));
-    await handler();
+    if (context?.functionName) {
+      let failedRuns: any = process.env.FAILED_RUNS;
+      failedRuns = Number(failedRuns) + 1;
+      await lambda.updateFunctionConfiguration({
+        FunctionName: context?.functionName,
+        Environment: {
+          Variables: {
+            FAILED_RUNS: String(failedRuns),
+          },
+        },
+      }).promise();
+    }
   }
 };

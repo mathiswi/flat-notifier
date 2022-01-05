@@ -3,6 +3,7 @@ import * as lambda from '@aws-cdk/aws-lambda';
 import * as events from '@aws-cdk/aws-events';
 import * as targets from '@aws-cdk/aws-events-targets';
 import { Duration } from '@aws-cdk/core';
+import * as iam from '@aws-cdk/aws-iam';
 
 // import * as sqs from 'aws-cdk-lib/aws-sqs';
 
@@ -25,18 +26,11 @@ export class FlatNotifierStack extends cdk.Stack {
       schedule: events.Schedule.expression('rate(10 minutes)'),
     });
     schedule.addTarget(new targets.LambdaFunction(ebayLambda));
-    // for (let i = 0; i < 6; i += 1) {
-    //   const ebayLambda = new lambda.Function(this, `ebay_number_${i}`, {
-    //     code: lambda.Code.fromAsset('dist/src/ebay/'
-    // , { exclude: ['*.ts', 'local.js', '*.html', ''] }),
-    //     handler: 'ebay.handler',
-    //     runtime: lambda.Runtime.NODEJS_14_X,
-    //     timeout: Duration.seconds(20),
-    //     memorySize: 256,
-    //     layers: [discordLayer, jsdomLayer],
-    //   });
-
-    // }
+    ebayLambda.addToRolePolicy(new iam.PolicyStatement({
+      effect: iam.Effect.ALLOW,
+      resources: ['*'],
+      actions: ['lambda:UpdateFunctionConfiguration'],
+    }));
   }
 }
 

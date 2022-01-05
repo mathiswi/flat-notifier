@@ -23,6 +23,7 @@
     "@typescript-eslint/eslint-plugin": "^5.6.0",
     "@typescript-eslint/parser": "^5.6.0",
     "aws-cdk": "^1.134.0",
+    "aws-sdk": "^2.1048.0",
     "discord.js": "^12.5.3",
     "eslint": "^8.4.1",
     "eslint-config-airbnb-base": "^15.0.0",
@@ -39,6 +40,7 @@
     "@aws-cdk/aws-events": "^1.134.0",
     "@aws-cdk/aws-events-targets": "^1.134.0",
     "@aws-cdk/aws-lambda": "^1.134.0",
-    "@aws-cdk/core": "^1.134.0"
+    "@aws-cdk/core": "^1.134.0",
+    "@types/aws-lambda": "^8.10.89"
   }
 }
