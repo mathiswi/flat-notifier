@@ -1,12 +1,12 @@
-const mock = [
-  '1941380733',
-  '1943252790',
-  '1956151029',
-  '1956082259',
-  '1943252790',
-  '1954460826',
-];
+import * as aws from 'aws-sdk';
 
-export async function getIdsFromDb(): Promise<string[]> {
-  return mock;
+export async function getIdsFromDb(): Promise<string[] | undefined> {
+  const dynamoDb = new aws.DynamoDB({ region: 'eu-central-1' });
+  const params = {
+    TableName: 'ebay',
+  };
+
+  const { Items } = await dynamoDb.scan(params).promise();
+  const ids = Items?.map((item) => item.flatId.S as string);
+  return ids;
 }

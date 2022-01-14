@@ -1,4 +1,4 @@
-import { findNewFlatUrls } from './findNewFlats';
+import { compareForNewFlats } from './compareForNewFlats';
 
 test('Check if new flats are available and return urls', () => {
   const mockedNewFlats = [
@@ -41,7 +41,7 @@ test('Check if new flats are available and return urls', () => {
     '1954460826',
   ];
 
-  expect(findNewFlatUrls(mockedNewFlats, mockedIds)).toStrictEqual([
-    '/s-anzeige/3-zkbb-zentral-ol-buergerfelde/1955972992-203-3112',
+  expect(compareForNewFlats(mockedNewFlats, mockedIds)).toStrictEqual([
+    { flatUrl: '/s-anzeige/3-zkbb-zentral-ol-buergerfelde/1955972992-203-3112', flatId: '1955972992' },
   ]);
 });

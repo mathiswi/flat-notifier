@@ -5,8 +5,9 @@ import { sendDiscordMessage } from './sendDiscordMessage';
 import { formatMessage } from './formatMessage';
 import { getInfosFromOverview } from './getInfosFromOverview';
 import { getIdsFromDb } from './getIdsFromDb';
-import { findNewFlatUrls } from './findNewFlats';
+import { compareForNewFlats } from './compareForNewFlats';
 import { scrapeFlatPage } from './scrapeFlatPage';
+import { writeIdToDb } from './writeIdToDb';
 
 const path = require('path');
 
@@ -28,19 +29,22 @@ export const handler = async (): Promise<void> => {
       [getInfosFromOverview(domWindow), getIdsFromDb()],
     );
 
-    const newUrls = findNewFlatUrls(foundFlats, idsFromDB);
-
-    const flats = await Promise.all(newUrls.map(async (url) => await scrapeFlatPage(url)));
-    const promises = [];
-    if (flats.length > 0) {
+    const newFlats = compareForNewFlats(foundFlats, idsFromDB ?? []);
+    if (newFlats.length > 0) {
+      await Promise.all(newFlats.map(async ({ flatId }) => await writeIdToDb(flatId)));
       console.log('Wohnung gefunden');
-      for (const flat of flats) {
+
+      const flatsWithDetails = await Promise.all(
+        newFlats.map(async ({ flatUrl }) => await scrapeFlatPage(flatUrl)),
+      );
+      const promises = [];
+      for (const flat of flatsWithDetails) {
         promises.push(sendDiscordMessage(formatMessage(flat), flat.firstImageUrl));
       }
+      await Promise.all(promises);
     } else {
       console.log('Keine neue Wohnung verfügbar');
     }
-    await Promise.all(promises);
   } catch (err: any) {
     console.error(err);
     // await sendDiscordMessage(formatErrorMessage(err));
