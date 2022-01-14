@@ -21,7 +21,7 @@ export async function scrapeFlatPage(href: string): Promise<Flat> {
     adresse: '',
   };
 
-  const { window } = await JSDOM.fromURL(href);
+  const { window } = await JSDOM.fromURL(`https://www.ebay-kleinanzeigen.de${href}`);
   flat.titel = trimString(window.document.querySelector('#viewad-title')?.textContent as string);
   flat.adresse = trimString(window.document.querySelector('#viewad-locality')?.textContent as string);
   flat.kaltMiete = trimString(window.document.querySelector('#viewad-price')?.textContent as string);

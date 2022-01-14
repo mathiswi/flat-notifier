@@ -17,13 +17,14 @@
     "deploy": "cdk deploy"
   },
   "devDependencies": {
+    "@aws-cdk/aws-dynamodb": "^1.134.0",
     "@types/jest": "^27.0.3",
     "@types/jsdom": "^16.2.13",
     "@types/ws": "^8.2.2",
     "@typescript-eslint/eslint-plugin": "^5.6.0",
     "@typescript-eslint/parser": "^5.6.0",
     "aws-cdk": "^1.134.0",
-    "aws-sdk": "^2.1048.0",
+    "aws-sdk": "^2.1058.0",
     "discord.js": "^12.5.3",
     "eslint": "^8.4.1",
     "eslint-config-airbnb-base": "^15.0.0",

@@ -12,3 +12,8 @@ interface Flat {
   features?: string[]
   firstImageUrl?: string
 }
+
+interface FlatInfo {
+  flatUrl: string
+  flatId: string
+}
