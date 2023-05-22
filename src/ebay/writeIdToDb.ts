@@ -6,7 +6,7 @@ export async function writeIdToDb(id: string) {
   console.log(`Writing ${id} to db`);
 
   const params: PutItemInput = {
-    TableName: 'ebay',
+    TableName: 'ebayTable',
     Item: {
       // @ts-ignore
       flatId: { S: id },
