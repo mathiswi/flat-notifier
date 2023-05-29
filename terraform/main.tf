@@ -13,3 +13,12 @@ resource "aws_dynamodb_table" "ebay-table" {
   }
 
 }
+
+
+terraform {
+  backend "s3" {
+    bucket = "terraformstate-mw-b23arq"
+    key    = "state/terraform.tfstate"
+    region = "eu-central-1"
+  }
+}

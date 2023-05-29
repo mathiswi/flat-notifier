@@ -1,13 +1,13 @@
 /* eslint-disable no-restricted-syntax */
 import { readFileSync } from 'fs';
 import { DOMWindow, JSDOM } from 'jsdom';
-import { sendDiscordMessage } from './sendDiscordMessage';
-import { formatMessage } from './formatMessage';
+import { formatMessage, formatMessageForTelegram } from './formatMessage';
 import { getInfosFromOverview } from './getInfosFromOverview';
 import { getIdsFromDb } from './getIdsFromDb';
 import { compareForNewFlats } from './compareForNewFlats';
 import { scrapeFlatPage } from './scrapeFlatPage';
 import { writeIdToDb } from './writeIdToDb';
+import { sendTelegramMessage } from './sendTelegramMessage';
 
 const path = require('path');
 
@@ -19,7 +19,7 @@ export const handler = async (): Promise<void> => {
       const { window } = new JSDOM(file);
       domWindow = window;
     } else {
-      const url = 'https://www.ebay-kleinanzeigen.de/s-wohnung-mieten/oldenburg/anzeige:angebote/preis::780/c203l3108r5+wohnung_mieten.qm_d:40.00,80';
+      const url = 'https://www.kleinanzeigen.de/s-wohnung-mieten/49080/anzeige:angebote/preis::950/c203l3124r5+wohnung_mieten.qm_d:50.00%2C95.00+wohnung_mieten.zimmer_d:3.0%2C3.0';
       const { window } = await JSDOM.fromURL(url, {
         pretendToBeVisual: true,
       });
@@ -39,7 +39,7 @@ export const handler = async (): Promise<void> => {
       );
       const promises = [];
       for (const flat of flatsWithDetails) {
-        promises.push(sendDiscordMessage(formatMessage(flat), flat.firstImageUrl));
+        promises.push(sendTelegramMessage(formatMessageForTelegram(flat), flat.firstImageUrl));
       }
       await Promise.all(promises);
     } else {

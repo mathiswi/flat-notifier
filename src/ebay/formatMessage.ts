@@ -29,6 +29,25 @@ ${input.titel}
   return detailBlock;
 }
 
+export function formatMessageForTelegram(input: Flat): string {
+  const detailBlock: string = `
+${input.url}
+
+${input.titel}
+
+*Kalt*: ${input.kaltMiete}
+*Warm*: ${input.warmMiete}
+*Nebenkosten*: ${input.nebenkosten}
+*Größe*: ${input.groeße}
+*Adresse*: ${input.adresse}
+*Zimmer*: ${input.zimmerAnzahl}
+*Typ*: ${input.wohnungsTyp}
+*Verfügbar:* ${input.verfuegbarAb}
+  `;
+  return detailBlock;
+}
+
+
 export function formatErrorMessage(input: any) {
   const text = JSON.stringify(input, Object.getOwnPropertyNames(input), 4);
 

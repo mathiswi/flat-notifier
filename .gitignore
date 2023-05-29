@@ -5,7 +5,7 @@ dist/
 # CDK asset staging directory
 .cdk.staging
 cdk.out
-**/*/config.json
+**/*/**onfig.json
 
 ### Terraform ###
 # Local .terraform directories
